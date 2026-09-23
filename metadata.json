@@ -1,0 +1,8 @@
+{
+  "name": "Romantic Cinematic Birthday & Love Experience",
+  "description": "An interactive, customizable romantic birthday website featuring passcode unlock, floral transitions, pull-cord lamp, cake slicing, animated love letter, and a 3D cinematic floating photo galaxy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
