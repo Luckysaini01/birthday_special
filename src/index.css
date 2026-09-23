@@ -7,6 +7,19 @@
     --font-script: 'Dancing Script', 'Sacramento', cursive;
     --font-hand: 'Caveat', cursive;
   }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+  }
+
+  body {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 .font-serif {

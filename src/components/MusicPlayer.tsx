@@ -50,9 +50,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   };
 
   return (
-    <div className="fixed top-4 left-4 z-40 flex items-center gap-2">
+    <div className="fixed top-3 left-3 z-40 flex items-center gap-2 max-w-[calc(100vw-24px)]">
       <div
-        className={`flex items-center gap-2 px-3 py-2 rounded-full backdrop-blur-md transition-all shadow-md ${
+        className={`flex items-center gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full backdrop-blur-md transition-all shadow-md ${
           dark
             ? 'bg-black/60 border border-white/20 text-white'
             : 'bg-white/80 border border-pink-200 text-pink-900'

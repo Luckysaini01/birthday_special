@@ -38,33 +38,13 @@ export default function App() {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isLoveReasonsOpen, setIsLoveReasonsOpen] = useState(false);
 
-  // Sync custom audio if configured and unlock playback after the first user gesture.
+  // Keep music silent until the passcode is unlocked.
   useEffect(() => {
     if (config.customAudioUrl) {
       musicPlayer.setCustomAudio(config.customAudioUrl);
+    } else {
+      musicPlayer.setCustomAudio(undefined);
     }
-
-    const unlockMusic = () => {
-      if (config.customAudioUrl) {
-        musicPlayer.setCustomAudio(config.customAudioUrl);
-      }
-      if (!musicPlayer.getIsPlaying()) {
-        musicPlayer.play();
-      }
-      window.removeEventListener('pointerdown', unlockMusic);
-      window.removeEventListener('touchstart', unlockMusic);
-      window.removeEventListener('keydown', unlockMusic);
-    };
-
-    window.addEventListener('pointerdown', unlockMusic, { once: true });
-    window.addEventListener('touchstart', unlockMusic, { once: true });
-    window.addEventListener('keydown', unlockMusic, { once: true });
-
-    return () => {
-      window.removeEventListener('pointerdown', unlockMusic);
-      window.removeEventListener('touchstart', unlockMusic);
-      window.removeEventListener('keydown', unlockMusic);
-    };
   }, [config.customAudioUrl]);
 
   // Save changes to localStorage
@@ -136,6 +116,12 @@ export default function App() {
 
   // Scene Transitions
   const handlePasscodeSuccess = () => {
+    if (config.customAudioUrl) {
+      musicPlayer.setCustomAudio(config.customAudioUrl);
+    }
+    if (!musicPlayer.getIsPlaying()) {
+      musicPlayer.play();
+    }
     setIsFloralActive(true);
   };
 

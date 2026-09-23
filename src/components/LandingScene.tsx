@@ -116,26 +116,26 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-gradient-to-br from-[#ffeef4] via-[#fde2e8] to-[#fcd5e2]">
+    <div className="relative min-h-screen w-full flex items-center justify-center px-3 py-4 sm:px-4 sm:py-6 lg:p-8 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-[#ffeef4] via-[#fde2e8] to-[#fcd5e2]">
       {/* Background Soft Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-300/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-pink-300/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Glass/Pastel Card Container */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-5xl rounded-[2.5rem] bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-15px_rgba(236,72,153,0.15)] p-6 sm:p-10 lg:p-14"
+        className="relative z-10 w-full max-w-5xl rounded-[2rem] sm:rounded-[2.5rem] bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_20px_60px_-15px_rgba(236,72,153,0.15)] p-4 sm:p-6 lg:p-14"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-12 items-center">
           
           {/* LEFT SIDE: Large Polaroid Photo with Pink Ribbon */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center">
             <motion.div
               whileHover={{ rotate: 1, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="relative group w-full max-w-[340px] sm:max-w-[380px] bg-white p-4 pb-7 rounded-2xl shadow-2xl border border-pink-100/80 transform -rotate-1.5 transition-transform"
+              className="relative group w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] bg-white p-3 pb-6 sm:p-4 sm:pb-7 rounded-2xl shadow-2xl border border-pink-100/80 transform -rotate-1.5 transition-transform"
             >
               {/* Decorative Pink Ribbon/Bow graphic top-left (Matching Reference Video) */}
               <div className="absolute -top-4 -left-4 z-20 w-16 h-16 pointer-events-none drop-shadow-md select-none">
@@ -168,8 +168,8 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
               </div>
 
               {/* Polaroid Handwritten Caption */}
-              <div className="mt-4 text-center">
-                <p className="font-script text-2xl sm:text-3xl text-gray-800 tracking-wide">
+              <div className="mt-3 sm:mt-4 text-center">
+                <p className="font-script text-xl sm:text-2xl lg:text-3xl text-gray-800 tracking-wide">
                   {polaroidText}
                 </p>
               </div>
@@ -184,7 +184,7 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
             <motion.h1
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 tracking-tight"
+              className="font-serif text-2xl sm:text-3xl lg:text-5xl font-bold text-gray-800 tracking-tight"
             >
               Enter Passcode
             </motion.h1>
@@ -193,14 +193,14 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
             <motion.div
               animate={errorShake ? { x: [-10, 10, -8, 8, -4, 4, 0] } : {}}
               transition={{ duration: 0.4 }}
-              className="my-5 sm:my-6 flex items-center justify-center gap-3 sm:gap-4"
+              className="my-4 sm:my-6 flex items-center justify-center gap-2 sm:gap-4"
             >
               {Array.from({ length: expectedLength }).map((_, idx) => {
                 const isFilled = idx < enteredDigits.length;
                 return (
                   <div
                     key={idx}
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center transition-all duration-300 border ${
+                    className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-2xl flex items-center justify-center transition-all duration-300 border ${
                       isFilled
                         ? 'bg-gradient-to-br from-pink-400 to-rose-500 border-pink-400 text-white shadow-md shadow-pink-400/30 scale-105'
                         : 'bg-white/80 border-pink-200 text-pink-300'
@@ -217,7 +217,7 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
             </motion.div>
 
             {/* Circular Keypad (1 - 10, *, 0) */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-[280px] sm:max-w-[320px] w-full">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3 lg:gap-4 max-w-[260px] sm:max-w-[300px] lg:max-w-[320px] w-full">
               {['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '10'].map((val) => {
                 const isBack = val === '*' || val === '10';
                 const label = val === '10' ? '⌫' : val === '*' ? '♥' : val;
@@ -228,7 +228,7 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.92 }}
                     onClick={() => handleDigitPress(val === '10' ? 'del' : val)}
-                    className="w-16 h-16 sm:w-18 sm:h-18 mx-auto rounded-full bg-white/90 hover:bg-white text-gray-800 hover:text-pink-600 font-sans text-xl sm:text-2xl font-bold shadow-md hover:shadow-lg border border-pink-100/90 flex items-center justify-center transition-colors cursor-pointer select-none"
+                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-[4.5rem] lg:h-[4.5rem] mx-auto rounded-full bg-white/90 hover:bg-white text-gray-800 hover:text-pink-600 font-sans text-xl sm:text-2xl font-bold shadow-md hover:shadow-lg border border-pink-100/90 flex items-center justify-center transition-colors cursor-pointer select-none"
                   >
                     {isBack && val === '10' ? (
                       <span className="text-base sm:text-lg text-pink-500">⌫</span>
@@ -245,7 +245,7 @@ export const LandingScene: React.FC<LandingSceneProps> = ({
           </div>
 
           {/* RIGHT RAIL: TikTok / Instagram Style Interactive Action Bar (Matching Reference Video) */}
-          <div className="lg:col-span-1 flex flex-row lg:flex-col items-center justify-center gap-6 lg:gap-8 lg:border-l lg:border-pink-200/60 lg:pl-6">
+          <div className="lg:col-span-1 flex flex-row lg:flex-col items-center justify-center gap-3 sm:gap-5 lg:gap-8 lg:border-l lg:border-pink-200/60 lg:pl-6">
             
             {/* Heart Likes Button */}
             <div className="flex flex-col items-center">
