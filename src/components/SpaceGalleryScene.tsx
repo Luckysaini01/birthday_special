@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { RotateCcw, Plus, Sparkles, Settings, Eye, Heart } from 'lucide-react';
+import { RotateCcw, Plus, Eye, Heart } from 'lucide-react';
 import { PhotoItem } from '../types';
 import { PhotoLightbox } from './PhotoLightbox';
 
@@ -40,48 +40,45 @@ export const SpaceGalleryScene: React.FC<SpaceGallerySceneProps> = ({
     setStars(starList);
   }, []);
 
-  // Parallax on mouse move
   const handleMouseMove = (e: React.MouseEvent) => {
-    const { innerWidth, innerHeight } = window;
-    const x = (e.clientX / innerWidth - 0.5) * 20;
-    const y = (e.clientY / innerHeight - 0.5) * 20;
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
     setMouseOffset({ x, y });
   };
 
-  // Touch parallax for mobile
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      const { innerWidth, innerHeight } = window;
-      const x = (touch.clientX / innerWidth - 0.5) * 15;
-      const y = (touch.clientY / innerHeight - 0.5) * 15;
-      setMouseOffset({ x, y });
-    }
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const x = (touch.clientX / window.innerWidth - 0.5) * 15;
+    const y = (touch.clientY / window.innerHeight - 0.5) * 15;
+    setMouseOffset({ x, y });
   };
 
-  // Ensure default positions for any added photos
+  const defaultPositions = [
+    { x: 18, y: 20, z: 40, rotation: -5 },
+    { x: 38, y: 18, z: -10, rotation: 6 },
+    { x: 62, y: 22, z: 35, rotation: -7 },
+    { x: 82, y: 28, z: -25, rotation: 5 },
+    { x: 24, y: 48, z: 25, rotation: -3 },
+    { x: 48, y: 40, z: 80, rotation: -1 },
+    { x: 72, y: 50, z: -35, rotation: -6 },
+    { x: 90, y: 58, z: -18, rotation: 4 },
+    { x: 16, y: 70, z: -40, rotation: 7 },
+    { x: 40, y: 74, z: 20, rotation: -4 },
+    { x: 62, y: 76, z: 30, rotation: 5 },
+    { x: 82, y: 78, z: -28, rotation: -8 },
+  ];
   const positionedPhotos = photos.map((photo, index) => {
-    const defaultPositions = [
-      { x: 18, y: 20, z: 40, r: -5 },
-      { x: 38, y: 18, z: -10, r: 6 },
-      { x: 62, y: 22, z: 35, r: -7 },
-      { x: 82, y: 28, z: -25, r: 5 },
-      { x: 24, y: 48, z: 25, r: -3 },
-      { x: 48, y: 40, z: 80, r: -1 },
-      { x: 72, y: 50, z: -35, r: -6 },
-      { x: 90, y: 58, z: -18, r: 4 },
-      { x: 16, y: 70, z: -40, r: 7 },
-      { x: 40, y: 74, z: 20, r: -4 },
-      { x: 62, y: 76, z: 30, r: 5 },
-      { x: 82, y: 78, z: -28, r: -8 },
-    ];
-    const pos = defaultPositions[index % defaultPositions.length];
+    const position = defaultPositions[index % defaultPositions.length];
     return {
       ...photo,
-      x: photo.x ?? pos.x,
-      y: photo.y ?? pos.y,
-      z: photo.z ?? pos.z,
-      rotation: photo.rotation ?? pos.r,
+      x: photo.x ?? position.x,
+      y: photo.y === undefined
+        ? position.y
+        : Math.min(photo.y * 0.65 + 12, 68),
+      z: photo.z ?? position.z,
+      rotation: photo.rotation ?? position.rotation,
       scale: photo.scale ?? 1,
     };
   });
@@ -125,15 +122,15 @@ export const SpaceGalleryScene: React.FC<SpaceGallerySceneProps> = ({
           className="inline-block"
         >
           <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-pink-200 via-rose-300 to-amber-200 bg-clip-text text-transparent tracking-tight">
-            Our Constellation of Memories ✨
+            Birthday Memories for {recipientName} ✨
           </h2>
           <p className="text-[11px] sm:text-sm text-pink-300/80 mt-1 font-medium">
-            Tap any star photo to view memories in detail
+            Celebrating your beautiful moments, Bhabhiji 💖
           </p>
         </motion.div>
       </header>
 
-      {/* 3D FLOATING PHOTO GALAXY (Matching 00:17 - 00:24 in reference video) */}
+      {/* Floating photo gallery; cards appear one after another */}
       <div className="relative flex-1 w-full perspective-1000 overflow-hidden">
         <div
           className="relative w-full h-full preserve-3d transition-transform duration-300 ease-out"
@@ -141,58 +138,57 @@ export const SpaceGalleryScene: React.FC<SpaceGallerySceneProps> = ({
             transform: `rotateY(${mouseOffset.x * 0.4}deg) rotateX(${-mouseOffset.y * 0.4}deg)`,
           }}
         >
-          {positionedPhotos.map((photo, index) => (
-            <motion.div
-              key={photo.id || index}
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{
-                opacity: 1,
-                scale: photo.scale,
-                y: [0, -8, 0],
-              }}
-              transition={{
-                opacity: { duration: 1, delay: index * 0.1 },
-                scale: { duration: 0.8, delay: index * 0.1 },
-                y: {
-                  duration: 4 + (index % 3),
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: index * 0.4,
-                },
-              }}
-              style={{
-                position: 'absolute',
-                left: `${photo.x}%`,
-                top: `${photo.y}%`,
-                transform: `translate(-50%, -50%) translateZ(${photo.z}px) rotate(${photo.rotation}deg)`,
-              }}
-              className="group cursor-pointer z-10"
-              onClick={() => setSelectedPhoto(photo)}
-            >
-              {/* Polaroid Frame */}
-              <div className="w-28 sm:w-36 md:w-44 bg-[#18181f] p-2 pb-3.5 sm:p-2.5 sm:pb-4 rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.8)] border border-white/15 transition-all duration-300 group-hover:scale-110 group-hover:border-pink-400 group-hover:shadow-[0_0_25px_rgba(236,72,153,0.5)]">
-                {/* Photo Thumbnail */}
-                <div className="w-full aspect-[4/4.5] rounded-lg overflow-hidden bg-black/60 relative">
-                  <img
-                    src={photo.url}
-                    alt={photo.caption || 'Memory'}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Subtle view hover overlay */}
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                    <Eye size={18} className="drop-shadow-md" />
+          {positionedPhotos.map((photo, index) => {
+            const revealDelay = index * 0.55;
+
+            return (
+              <motion.div
+                key={photo.id || index}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{
+                  opacity: 1,
+                  scale: photo.scale,
+                  y: [0, -8, 0],
+                }}
+                transition={{
+                  opacity: { duration: 0.45, delay: revealDelay },
+                  scale: { duration: 0.45, delay: revealDelay },
+                  y: {
+                    duration: 4 + (index % 3),
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: revealDelay,
+                  },
+                }}
+                style={{
+                  position: 'absolute',
+                  left: `${photo.x}%`,
+                  top: `${photo.y}%`,
+                  transform: `translate(-50%, -50%) translateZ(${photo.z}px) rotate(${photo.rotation}deg)`,
+                }}
+                className="group z-10 cursor-pointer"
+                onClick={() => setSelectedPhoto(photo)}
+              >
+                <div className="w-24 rounded-xl border border-white/15 bg-[#18181f] p-2 pb-3.5 shadow-[0_10px_35px_rgba(0,0,0,0.8)] transition-all duration-300 group-hover:scale-110 group-hover:border-pink-400 group-hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] sm:w-32 sm:p-2.5 sm:pb-4 md:w-40">
+                  <div className="relative aspect-[4/4.5] w-full overflow-hidden rounded-lg bg-black/60">
+                    <img
+                      src={photo.url}
+                      alt={photo.caption || 'Birthday memory'}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white opacity-0 transition-opacity group-hover:opacity-100">
+                      <Eye size={18} className="drop-shadow-md" />
+                    </div>
+                  </div>
+                  <div className="mt-2 text-center">
+                    <p className="max-w-full truncate px-1 text-[10px] font-medium text-gray-300 group-hover:text-pink-300 sm:text-xs">
+                      {photo.caption || photo.date || 'Memory ❤️'}
+                    </p>
                   </div>
                 </div>
-
-                {/* Caption / Label at bottom */}
-                <div className="mt-2 text-center">
-                  <p className="text-[10px] sm:text-xs font-medium text-gray-300 group-hover:text-pink-300 truncate max-w-full px-1">
-                    {photo.caption || photo.date || 'Memory ❤️'}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
@@ -241,7 +237,7 @@ export const SpaceGalleryScene: React.FC<SpaceGallerySceneProps> = ({
             className="px-4 sm:px-5 py-2.5 sm:py-3 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-400/40 rounded-full text-xs sm:text-sm font-semibold text-rose-200 shadow-lg flex items-center gap-2 transition-all cursor-pointer"
           >
             <Heart size={16} className="text-pink-400 fill-pink-400" />
-            <span>Friendship Reasons 💛</span>
+            <span>Birthday Wishes 💛</span>
           </motion.button>
         )}
 

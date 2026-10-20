@@ -10,33 +10,33 @@ interface LoveReasonsModalProps {
   recipientName: string;
 }
 
-const FRIENDSHIP_REASONS = [
-  "Because your friendship makes every day brighter and lighter ✨",
-  "Because you are the kind of person who can make anyone feel comfortable and happy 🌸",
-  "Because your smile has a calmness that instantly makes everything better 💕",
-  "Because your support and understanding mean more to me than words can say 🤍",
-  "Because you always show up with kindness, laughter, and genuine care 💖",
-  "Because even the smallest moments with you turn into beautiful memories 😄",
-  "Because your friendship feels like home, peace, and comfort all at once 🏡",
-  "Because you never fail to make me feel special and valued 🫶",
-  "Because your loyalty, honesty, and warmth are rare and precious 🌷",
-  "Because you are not just my friend, you are one of my favorite people forever ❤️"
+const BIRTHDAY_REASONS = [
+  "Aapki pyaari muskaan har din ko roshan kar deti hai ✨",
+  "Aapke pyaar aur apnapan se ghar hamesha khushiyon se bhara rehta hai 🌸",
+  "Aapka shaant aur pyaara swabhav sabko sukoon deta hai 💕",
+  "Aapka saath aur samajhdari hum sabke liye bahut khaas hai 🤍",
+  "Aap har kisi se itne pyaar aur izzat se milti hain 💖",
+  "Aapke saath bitaaye chhote-chhote pal bhi khoobsurat yaadein ban jaate hain 😄",
+  "Aapki wajah se parivaar mein ghar jaisi warmth aur khushi mehsoos hoti hai 🏡",
+  "Aap sabko apna aur khaas mehsoos karati hain 🫶",
+  "Aapki saadgi, imaandari aur pyaar sach mein anmol hain 🌷",
+  "Aap sirf hamari Bhabhiji nahi, parivaar ki bahut pyaari aur khaas member hain ❤️"
 ];
 
-const FRIENDSHIP_QUOTES = [
-  "In a sea of people, my eyes will always find you. 💕",
-  "Every friendship is beautiful, but ours is my absolute favorite. ✨",
-  "I valued you yesterday, value you still, always have, always will. 💖",
-  "You are my safe place and my favorite person to laugh with. 🌹",
-  "To the world you may be one person, but to me you are a whole world of comfort. 🌍💛",
-  "I admire the way you light up every room just by being you. ✨"
+const BIRTHDAY_WISHES = [
+  "Aapki muskaan hamesha yunhi khilti rahe. Janmadin ki dher saari shubhkamnayein, Bhabhiji! 💕",
+  "Aapka har din pyaar, khushi aur sukoon se bhara rahe. ✨",
+  "Aapke saare sapne poore hon aur har dua qubool ho. 💖",
+  "Aap hamesha sehatmand, khush aur muskurati rahein. 🌹",
+  "Hamare parivaar mein aapka hona hum sabke liye bahut khaas hai. 🌍💛",
+  "Aap jahan bhi rahein, apni pyaari si roshni se har jagah khushiyan baantti rahein. ✨"
 ];
 
 export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onClose, recipientName }) => {
   const [activeTab, setActiveTab] = useState<'reasons' | 'quotes' | 'meter'>('reasons');
   const [revealedReasons, setRevealedReasons] = useState<number[]>([0, 1, 2]);
   const [lovePercentage, setLovePercentage] = useState(100);
-  const [loveMessage, setLoveMessage] = useState('Infinity & Beyond! 💖');
+  const [loveMessage, setLoveMessage] = useState('Dher saara pyaar aur khushiyan! 💖');
 
   useEffect(() => {
     let timeoutId: number;
@@ -54,10 +54,10 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
 
   const handleRevealNext = () => {
     playKeySound();
-    if (revealedReasons.length < FRIENDSHIP_REASONS.length) {
+    if (revealedReasons.length < BIRTHDAY_REASONS.length) {
       const nextIdx = revealedReasons.length;
       setRevealedReasons([...revealedReasons, nextIdx]);
-      if (nextIdx === FRIENDSHIP_REASONS.length - 1) {
+      if (nextIdx === BIRTHDAY_REASONS.length - 1) {
         playPasscodeSuccessSound();
         confetti({
           particleCount: 70,
@@ -74,10 +74,10 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
     const percent = Math.floor(Math.random() * 5) + 100; // 100% to 104%
     setLovePercentage(percent);
     const messages = [
-      'Infinite Friendship! You are my favorite person! 🌌💛',
-      '1000% Bestie Connection! ✨🤝',
-      'True friendship that defies all numbers! ♾️💛',
-      'Written in the stars forever! 🌟💖'
+      'Aapke liye dher saari khushiyan aur pyaar! 🌌💛',
+      'Bhabhiji ke liye birthday pyaar 1000%! ✨🎂',
+      'Aapka har din khushiyon se bhara rahe! ♾️💛',
+      'Aapki khushiyan hamesha yunhi chamakti rahein! 🌟💖'
     ];
     setLoveMessage(messages[Math.floor(Math.random() * messages.length)]);
     playPasscodeSuccessSound();
@@ -105,7 +105,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
             <div className="flex items-center gap-2">
               <Heart className="w-5 h-5 text-pink-500 fill-pink-500" />
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-gray-800">
-                Reasons You’re My Best Friend 🫶
+                Bhabhiji Itni Khaas Kyun Hain? 🫶
               </h3>
             </div>
             <button
@@ -127,7 +127,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
               }`}
             >
               <Gift size={15} />
-              <span>Reasons ({revealedReasons.length}/{FRIENDSHIP_REASONS.length})</span>
+              <span>Khaas Baatein ({revealedReasons.length}/{BIRTHDAY_REASONS.length})</span>
             </button>
             <button
               onClick={() => setActiveTab('quotes')}
@@ -138,7 +138,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
               }`}
             >
               <Bookmark size={15} />
-              <span>Sweet Quotes 💌</span>
+              <span>Birthday Wishes 💌</span>
             </button>
             <button
               onClick={() => setActiveTab('meter')}
@@ -149,7 +149,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
               }`}
             >
               <Sparkles size={15} />
-              <span>Friendship Meter 🤝</span>
+              <span>Khushiyon Ka Meter 🎂</span>
             </button>
           </div>
 
@@ -159,7 +159,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
             {activeTab === 'reasons' && (
               <div className="space-y-3">
                 <p className="text-xs sm:text-sm text-pink-700/80 font-medium text-center mb-3">
-                  Little things that make me so grateful to have you as my friend, {recipientName} 🌸
+                  Kuch baatein jo aapko hum sabke liye itna khaas banati hain, {recipientName} 🌸
                 </p>
                 {revealedReasons.map((idx) => (
                   <motion.div
@@ -172,12 +172,12 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
                       {idx + 1}
                     </span>
                     <p className="text-sm text-gray-800 leading-relaxed font-medium">
-                      {FRIENDSHIP_REASONS[idx]}
+                      {BIRTHDAY_REASONS[idx]}
                     </p>
                   </motion.div>
                 ))}
 
-                {revealedReasons.length < FRIENDSHIP_REASONS.length ? (
+                {revealedReasons.length < BIRTHDAY_REASONS.length ? (
                   <div className="pt-2 text-center">
                     <button
                       onClick={handleRevealNext}
@@ -189,16 +189,16 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
                   </div>
                 ) : (
                   <div className="p-3 rounded-2xl bg-pink-100/70 text-center text-xs font-bold text-pink-800 border border-pink-200 mt-3">
-                    ❤️ And countless a million more reasons every single day! ❤️
+                    ❤️ Aur bhi anek wajahen hain jinki wajah se aap itni pyaari hain! ❤️
                   </div>
                 )}
               </div>
             )}
 
-            {/* TAB 2: QUOTES */}
+            {/* TAB 2: BIRTHDAY WISHES */}
             {activeTab === 'quotes' && (
               <div className="space-y-3">
-                {FRIENDSHIP_QUOTES.map((quote, idx) => (
+                {BIRTHDAY_WISHES.map((quote, idx) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 8 }}
@@ -214,7 +214,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
               </div>
             )}
 
-            {/* TAB 3: FRIENDSHIP METER */}
+            {/* TAB 3: CELEBRATION METER */}
             {activeTab === 'meter' && (
               <div className="flex flex-col items-center justify-center py-4 text-center space-y-4">
                 <div className="relative flex items-center justify-center">
@@ -228,7 +228,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
                       {lovePercentage}%
                     </span>
                     <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">
-                      Bestie Match
+                      Khushiyan
                     </span>
                   </motion.div>
                 </div>
@@ -238,7 +238,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
                     {loveMessage}
                   </p>
                   <p className="text-xs text-gray-600 mt-1">
-                    Tested between You & {recipientName} 💛
+                    Aapke birthday ke liye, {recipientName} 💛
                   </p>
                 </div>
 
@@ -247,7 +247,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
                   className="px-6 py-2.5 bg-pink-100 hover:bg-pink-200 text-pink-700 text-xs sm:text-sm font-semibold rounded-full border border-pink-300 flex items-center gap-2 transition-colors cursor-pointer"
                 >
                   <RefreshCw size={14} />
-                  <span>Test Again ✨</span>
+                  <span>Phir se dekhein ✨</span>
                 </button>
               </div>
             )}
@@ -256,7 +256,7 @@ export const LoveReasonsModal: React.FC<LoveReasonsModalProps> = ({ isOpen, onCl
           {/* Footer */}
           <div className="px-6 py-3 border-t border-pink-100 bg-pink-50/40 text-center">
             <p className="font-script text-lg text-pink-600 font-semibold">
-              Forever grateful for your friendship 💛
+              Aapke liye dher saara pyaar aur shubhkamnayein 💛
             </p>
           </div>
         </motion.div>

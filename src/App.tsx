@@ -24,7 +24,14 @@ export default function App() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
+        const savedConfig = JSON.parse(saved) as Partial<AppConfig>;
+        return {
+          ...DEFAULT_CONFIG,
+          ...savedConfig,
+          passcode: savedConfig.passcode === '24092006'
+            ? DEFAULT_CONFIG.passcode
+            : savedConfig.passcode ?? DEFAULT_CONFIG.passcode,
+        };
       }
     } catch (e) {
       // Ignore
